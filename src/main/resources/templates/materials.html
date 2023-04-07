@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Materials</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+</head>
+<body>
+
+<div th:insert="~{navbar :: navbar}"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Materials</h1>
+        <div class="row my-5">
+          <div class="col-sm-12">
+            <a class="btn btn-lg btn-success" href="/materials/add" role="button" sec:authorize="hasAnyRole('TEACHER', 'ADMIN')" >Upload a New File</a>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col-md-4">
+          <form method="get" th:action="@{/materials/}">
+            <div class="form-group">
+              <label for="subjectId">Filter by subject:</label>
+              <select class="form-control" id="subjectId" name="subjectId">
+                <option value="">All subjects</option>
+                <th:block th:each="subject : ${subjects}">
+                  <option th:value="${subject.id}" th:text="${subject.name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Subject</th>
+          <th>File Name</th>
+          <th>Uploaded By</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="material : ${materials}">
+          <td th:text="${material.subject.name}"></td>
+          <td th:text="${material.title}"></td>
+          <td th:text="${material.teacher.firstName} + ' ' + ${material.teacher.lastName}"></td>
+          <td>
+            <a class="btn btn-primary btn-sm"
+               th:href="@{/materials/download/{id}(id=${material.id})}">Download</a>
+            <a class="btn btn-danger btn-sm" sec:authorize="hasAnyRole('TEACHER', 'ADMIN')" th:href="@{/materials/delete/{id}(id=${material.id})}">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

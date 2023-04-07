@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Material</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{navbar :: navbar}"></div>
+<div class="container mt-5">
+  <h1 class="mb-3">Add Material</h1>
+  <form method="post" enctype="multipart/form-data" th:object="${material}">
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <select class="form-control" id="subject" name="subject">
+        <option value="">Select Subject</option>
+        <th:block th:each="subject : ${subjects}">
+          <option th:value="${subject.id}" th:text="${subject.name}"></option>
+        </th:block>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="file">File</label>
+      <input type="file" class="form-control-file" id="file" name="file" required>
+    </div>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" name="title"
+             th:field="*{title}" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description"
+                th:field="*{description}" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="teacher">Teacher</label>
+      <select class="form-control" id="teacher" name="teacher">
+        <option value="">Select Teacher</option>
+        <th:block th:each="teacher : ${teachers}">
+          <option th:value="${teacher.id}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName}"></option>
+        </th:block>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</body>
+</html>

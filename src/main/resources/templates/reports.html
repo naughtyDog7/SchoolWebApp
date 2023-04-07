@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reporting Tool</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+
+<body>
+<div th:insert="~{navbar :: navbar}"></div>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-4">Reporting Tool</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="get" th:action="@{/reports/statistics}">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="subjectId">Subject</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="subjectId" name="subjectId" required>
+                            <option value="">Select Subject</option>
+                            <th:block th:each="subject : ${subjects}">
+                                <option th:value="${subject.id}" th:text="${subject.name}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Generate Report</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

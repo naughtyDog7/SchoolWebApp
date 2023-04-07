@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Statistics</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{navbar :: navbar}"></div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center mb-4">Statistics per Student</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Student ID</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Min Mark</th>
+          <th scope="col">Avg Mark</th>
+          <th scope="col">Max Mark</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${statisticsPerStudent}">
+          <td th:text="${entry.key.id}"></td>
+          <td th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}"></td>
+          <td th:text="${entry.value.minMark}"></td>
+          <td th:text="${entry.value.avgMark}"></td>
+          <td th:text="${entry.value.maxMark}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

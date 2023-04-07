@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Marks</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+</head>
+<body>
+
+<div th:insert="~{navbar :: navbar}"></div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center mb-4">Marks</h2>
+      <div class="mb-3">
+        <a class="btn btn-primary" href="/marks/add" role="button">Add Mark</a>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Student ID</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Mark</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="mark : ${marks}">
+          <td th:text="${mark.student.id}"></td>
+          <td th:text="${mark.student.firstName} + ' ' + ${mark.student.lastName}"></td>
+          <td th:text="${mark.subject.name}"></td>
+          <td th:text="${mark.value}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        crossorigin="anonymous"></script>
+</body>
+</html>
