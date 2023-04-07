@@ -30,3 +30,30 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.register('copyJarToDockerDir', Copy) {
+    from "$buildDir/libs"
+    include "**/*.jar"
+    into "$buildDir/docker"
+}
+
+tasks.register('prepareDockerDir', Copy) {
+    from "$projectDir/docker"
+    include "**/*"
+    filter { it.replaceAll('<%=name%>', project.name) }
+    into "$buildDir/docker"
+}
+
+tasks.register('buildDockerImage', Exec) {
+    workingDir "$buildDir"
+    commandLine "docker", "build", "-t", "naughtydog/schoolwebapp:${project.version}", "--build-arg", "JAR_FILE=SchoolWebApp-0.0.1-SNAPSHOT.jar", "docker"
+}
+
+tasks.register('pushDockerImage', Exec) {
+    commandLine "docker", "push", "naughtydog/schoolwebapp:${project.version}"
+}
+
+copyJarToDockerDir.dependsOn build
+prepareDockerDir.dependsOn copyJarToDockerDir
+buildDockerImage.dependsOn prepareDockerDir
+pushDockerImage.dependsOn buildDockerImage

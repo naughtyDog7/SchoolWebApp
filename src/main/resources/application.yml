@@ -1,11 +1,11 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/schooling
-    password: mysecretpassword
+    url: ${DB_URL}
+    password: ${DB_PASSWORD}
     username: postgres
